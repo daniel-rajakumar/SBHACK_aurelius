@@ -23,7 +23,7 @@ public class Game {
         scanner = new Scanner(System.in);
 
         System.out.println("Hey there, welcome to this game. ");
-        System.out.println("Goal: score 5 points to win");
+        System.out.println("Goal: 10 rounds, the player with highest point wins");
 
 
         loop();
@@ -105,16 +105,17 @@ public class Game {
     }
 
     boolean checkGameEnd(){
-        if (score < 5) {
+        if (count < 10) {
             return true;
         }
+
         System.out.println("\n\n\n");
         if (score > score_2){
             System.out.println("WOW! YOUR WIN");
         } else if (score < score_2) {
             System.out.println("LOL! YOUR LOSE");
         } else {
-            System.out.println("BAAM, it's a TIE!");
+            System.out.println("BAAAM, it's a TIE!");
         }
 
         return false;
