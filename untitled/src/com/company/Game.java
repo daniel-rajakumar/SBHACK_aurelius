@@ -10,6 +10,10 @@ enum Result {
     WIN, TIE, LOSE;
 }
 
+enum LEVLES {
+    EASY, MEDIUM, HERD
+}
+
 public class Game {
     Scanner scanner;
     Weapon player1_weapon, player2_weapon;
@@ -46,7 +50,7 @@ public class Game {
 
     void startRoundResult(){
         System.out.println("\n\n\n_____________ \nRound: " + count);
-        System.out.println("Score: " + score);
+        System.out.println("score: [" + score + " - " + score_2+ "]");
         System.out.println("Press: (1): Rock | (2): Paper | (3): Scissor");
         System.out.print("Your input: ");
     }
