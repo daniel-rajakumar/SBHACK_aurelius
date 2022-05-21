@@ -15,7 +15,7 @@ public class Game {
     Weapon player1_weapon, player2_weapon;
     Result resut;
     boolean run = true;
-    int score = 0;
+    int score = 0, score_2 = 0;
     int count = 0;
 
 
@@ -31,18 +31,22 @@ public class Game {
 
     void loop(){
         while (run){
+            count++;
             startRoundResult();
             player1_weapon = askPrompt();
             player2_weapon = getRandomWeapon();
             resut = checkLost();
-            run = checkGameEnd();
+            if (resut == Result.WIN) score++;
+            if (resut == Result.LOSE) score_2++;
             endRoundResult();
+            run = checkGameEnd();
         }
     }
 
 
     void startRoundResult(){
-        System.out.println("\n _____________ \n Round: " + count);
+        System.out.println("\n\n\n_____________ \nRound: " + count);
+        System.out.println("Score: " + score);
         System.out.println("Press: (1): Rock | (2): Paper | (3): Scissor");
         System.out.print("Your input: ");
     }
@@ -101,7 +105,19 @@ public class Game {
     }
 
     boolean checkGameEnd(){
-        return score < 5;
+        if (score < 5) {
+            return true;
+        }
+        System.out.println("\n\n\n");
+        if (score > score_2){
+            System.out.println("WOW! YOUR WIN");
+        } else if (score < score_2) {
+            System.out.println("LOL! YOUR LOSE");
+        } else {
+            System.out.println("BAAM, it's a TIE!");
+        }
+
+        return false;
     }
 
     int random(int min, int max){
