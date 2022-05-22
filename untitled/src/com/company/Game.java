@@ -10,8 +10,8 @@ enum Result {
     WIN, TIE, LOSE;
 }
 
-enum LEVLES {
-    EASY, MEDIUM, HERD
+enum Level {
+    EASY, MEDIUM, HARD
 }
 
 public class Game {
@@ -21,6 +21,8 @@ public class Game {
     boolean run = true;
     int score = 0, score_2 = 0;
     int count = 0;
+    Level level;
+    Weapon prevWeapon;
 
 
     Game(){
@@ -29,7 +31,9 @@ public class Game {
         System.out.println("Hey there, welcome to this game. ");
         System.out.println("Goal: 10 rounds, the player with highest point wins");
 
-
+        System.out.println("Choose level: (1): Easy | (2): Medium | (3): Hard");
+        level = chooseLevel();
+        System.out.println("You are playing against " + level + " level bot! Good luck! ");
         loop();
     }
 
@@ -38,6 +42,7 @@ public class Game {
             count++;
             startRoundResult();
             player1_weapon = askPrompt();
+            prevWeapon = player1_weapon;
             player2_weapon = getRandomWeapon();
             resut = checkLost();
             if (resut == Result.WIN) score++;
@@ -100,12 +105,46 @@ public class Game {
     }
 
     Weapon getRandomWeapon(){
-        return switch (random(1, 3)) {
-            case 1 -> Weapon.ROCK;
-            case 2 -> Weapon.PAPER;
-            case 3 -> Weapon.SCISSOR;
-            default -> null;
-        };
+        int random = 0;
+        int hardness = 0;
+
+        switch (level){
+            case MEDIUM -> hardness = 14;
+            case HARD -> hardness = 17;
+            default -> hardness = 3;
+        }
+//
+        random = random(1, hardness);
+
+        switch (player1_weapon){
+            case PAPER -> {
+                if (random == 1) return Weapon.ROCK;
+                if (random == 2) return Weapon.PAPER;
+                return Weapon.SCISSOR;
+            }
+            case ROCK -> {
+                if (random == 1) return Weapon.SCISSOR;
+                if (random == 2) return Weapon.ROCK;
+                return Weapon.PAPER;
+            }
+            case SCISSOR -> {
+                if (random == 1) return Weapon.SCISSOR;
+                if (random == 2) return Weapon.PAPER;
+                return Weapon.ROCK;
+            }
+            default -> { return Weapon.ROCK;}
+        }
+    }
+
+    Level chooseLevel(){
+        switch (scanner.nextLine()){
+            case "1": return Level.EASY;
+            case "2": return Level.MEDIUM;
+            case "3": return Level.HARD;
+        }
+
+        System.out.println("invalid input! try again:");
+        return chooseLevel();
     }
 
     boolean checkGameEnd(){
